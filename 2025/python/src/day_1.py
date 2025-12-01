@@ -14,7 +14,6 @@ def part_1(rotations):
 
         if dial == 0:
             zeros += 1
-
     print("Password part_1:", zeros)
 
 def part_2(rotations):
@@ -38,14 +37,8 @@ def part_2(rotations):
         if k_first == 0:  # k=0 is an invalid configuration, since I want to check dial positions only after a valid click (k>=1)
             k_first = 100  # if by chance k=0, the next valid "landing on zero" is for k=100
 
-        # count zero crossings
-        crosszero = 0 if k_first > amount else 1 + (amount - k_first) // 100
-
-        zeros += crosszero
-
+        zeros += 0 if k_first > amount else 1 + (amount - k_first) // 100
     print("Password part_2:", zeros)
-
-
 
 if __name__ == "__main__":
     input_rotations = utils.read_input(1, map_fn, False)

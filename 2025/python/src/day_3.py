@@ -3,7 +3,7 @@ import utils
 def map_fn(line):
     return line
 
-def max_shock(line):
+def max_shock(line:list[int]) -> int:
     best = 0
     # scorri tutte le posizioni per la prima cifra (decina)
     for i in range(len(line) - 1):
@@ -16,37 +16,22 @@ def max_shock(line):
         if shock > best:
             best = shock
     return best
-"""
-non funziona correttamente 
-"""
-# def big_max_shock(line):
-#     # trova il valore minimo
-#     minimo = min(int(num) for num in line)
-#     find_index = line.index(minimo)
-#     line.pop(find_index)
-#     for item in range(1,4):
-#         minimo = min(int(num) for num in line)
-#         find_index = line.index(minimo)
-#         line.pop(find_index)
-#
-#     result = ''.join(map(str, line))
-#     return int(result)
 
-def best_subsequence_of_length(line, k):
+def best_subsequence_of_length(line:str, number_to_take:int) -> str:
     """
-    Restituisce la sottosequenza lessicograficamente massima
-    di lunghezza k, mantenendo l'ordine.
+    Restituisce la sotto sequenza lessicograficamente massima
+    di lunghezza number_to_take, mantenendo l'ordine.
     """
-    take = k
-    n = len(line)
+    take = number_to_take
+    line_length = len(line)
     result = []
 
     start = 0
     while take > 0:
         # Finestra in cui è possibile scegliere la prossima cifra
-        end = n - take
+        end = line_length - take
 
-        # Trova la cifra più grande nella finestra line[start : end+1]
+        # Trova la cifra più grande nella finestra line[start:end+1]
         best_digit = max(line[start:end+1])
         pos = line.index(best_digit, start, end + 1)
 
@@ -56,14 +41,14 @@ def best_subsequence_of_length(line, k):
 
     return "".join(result)
 
-def total_shock(lines):
+def total_shock(lines: list[list[int]]):
     return sum(max_shock(line) for line in lines)
 
 def part_1(data:list[str]) -> None:
     lista = [list(map(int, num)) for item in data for num in item.split()]
     print("Shock totali:", total_shock(lista))
 
-def part_2(data:list[str]):
+def part_2(data:list[str]) -> None:
     total_big_shock = sum(int(best_subsequence_of_length(line, 12)) for line in data)
     print("Big shock totali:", total_big_shock)
 

@@ -4,6 +4,12 @@ def map_fn(line):
     return line
 
 def max_shock(line:list[int]) -> int:
+    """
+    Calcola il massimo 'shock' in una riga di cifre.
+    Per ogni posizione i prende la cifra in posizione i come decina
+    e la cifra massima alla sua destra come unità, formando first*10+second.
+    Restituisce il massimo di questi valori.
+    """
     best = 0
     # scorri tutte le posizioni per la prima cifra (decina)
     for i in range(len(line) - 1):
@@ -20,7 +26,10 @@ def max_shock(line:list[int]) -> int:
 def best_subsequence_of_length(line:str, number_to_take:int) -> str:
     """
     Restituisce la sotto sequenza lessicograficamente massima
-    di lunghezza number_to_take, mantenendo l'ordine.
+    di lunghezza number_to_take mantenendo l'ordine originale.
+    Algoritmo greedy: per ogni posizione scelta prende la cifra massima
+    possibile nella finestra rimanente che consente di completare la
+    sotto sequenza della lunghezza richiesta.
     """
     take = number_to_take
     line_length = len(line)
@@ -41,14 +50,20 @@ def best_subsequence_of_length(line:str, number_to_take:int) -> str:
 
     return "".join(result)
 
-def total_shock(lines: list[list[int]]):
-    return sum(max_shock(line) for line in lines)
-
 def part_1(data:list[str]) -> None:
+    """
+    Converte ogni token numerico in una lista di cifre (int) e somma
+    i valori max_shock per ogni riga, stampando il totale.
+    """
     lista = [list(map(int, num)) for item in data for num in item.split()]
-    print("Shock totali:", total_shock(lista))
+    total_shock = sum(max_shock(line) for line in lista)
+    print("Shock totali:", total_shock)
 
 def part_2(data:list[str]) -> None:
+    """
+    Per ogni riga interpreta la linea come una stringa di cifre e prende
+    la sotto sequenza massima di lunghezza 12, la converte in intero e somma.
+    """
     total_big_shock = sum(int(best_subsequence_of_length(line, 12)) for line in data)
     print("Big shock totali:", total_big_shock)
 

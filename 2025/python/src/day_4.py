@@ -4,98 +4,60 @@ def map_fn(input_file):
     lines = [line.strip() for line in input_file if '@' in line or '.' in line]
     return lines
 
+def count_adjacent_rolls(grid, row, col):
+    """Conta quanti rotoli di carta sono adiacenti a una posizione"""
+    directions = [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]
+    count = 0
 
-def solve(grid):
-    rows = len(grid)
-    cols = len(grid[0])
-    accessible_rolls = 0
+    for dr, dc in directions:
+        new_row, new_col = row + dr, col + dc
+        if 0 <= new_row < len(grid) and 0 <= new_col < len(grid[0]):
+            if grid[new_row][new_col] == '@':
+                count += 1
 
-    # 2. Itera su ogni cella della griglia.
-    for r in range(rows):
-        for c in range(cols):
-            # 3. Controlla se la cella corrente contiene un rotolo di carta.
-            if grid[r][c] == '@':
-                adjacent_rolls = 0
-
-                # 4. Itera sulle 8 posizioni adiacenti.
-                #    (dr, dc) rappresenta lo spostamento relativo dalla cella corrente.
-                for dr in [-1, 0, 1]:
-                    for dc in [-1, 0, 1]:
-                        # Salta la cella stessa (spostamento 0,0).
-                        if dr == 0 and dc == 0:
-                            continue
-
-                        # Calcola le coordinate del vicino.
-                        nr, nc = r + dr, c + dc
-
-                        # Controlla che il vicino sia dentro i bordi della griglia.
-                        if 0 <= nr < rows and 0 <= nc < cols:
-                            # Se il vicino è un rotolo, incrementa il contatore.
-                            if grid[nr][nc] == '@':
-                                adjacent_rolls += 1
-
-                # 5. Se il numero di rotoli adiacenti è minore di 4,
-                #    il rotolo corrente è accessibile.
-                if adjacent_rolls < 4:
-                    accessible_rolls += 1
-
-    # 6. Stampa il risultato finale.
-    print(f"Il numero di rotoli di carta accessibili è: {accessible_rolls}")
+    return count
 
 
-def solve_part_two(grid):
+def find_accessible_rolls(grid):
+    """Trova tutti i rotoli accessibili (con meno di 4 adiacenti)"""
+    accessible = []
 
-    if not grid:
-        print("La griglia nel file di input è vuota o non trovata.")
-        return
+    for row in range(len(grid)):
+        for col in range(len(grid[0])):
+            if grid[row][col] == '@':
+                if count_adjacent_rolls(grid, row, col) < 4:
+                    accessible.append((row, col))
 
-    rows = len(grid)
-    cols = len(grid[0])
-    total_removed_rolls = 0
+    return accessible
 
-    # 2. Inizia un ciclo che continua finché si rimuovono rotoli.
+def remove_accessible_rolls(grid):
+    """Rimuove iterativamente i rotoli accessibili"""
+    total_removed = 0
+
     while True:
-        removable_this_round = []
+        # Trova i rotoli accessibili
+        accessible = find_accessible_rolls(grid)
 
-        # 3. Identifica tutti i rotoli attualmente accessibili.
-        for r in range(rows):
-            for c in range(cols):
-                if grid[r][c] == '@':
-                    adjacent_rolls = 0
-                    # Itera sulle 8 posizioni adiacenti.
-                    for dr in [-1, 0, 1]:
-                        for dc in [-1, 0, 1]:
-                            if dr == 0 and dc == 0:
-                                continue
-
-                            nr, nc = r + dr, c + dc
-
-                            # Controlla i bordi e se il vicino è un rotolo.
-                            if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '@':
-                                adjacent_rolls += 1
-
-                    # Se accessibile, aggiungilo alla lista di rimozione.
-                    if adjacent_rolls < 4:
-                        removable_this_round.append((r, c))
-
-        # 4. Se nessun rotolo è stato rimosso in questo turno, esci dal ciclo.
-        if not removable_this_round:
+        # Se non ci sono rotoli da rimuovere, fermati
+        if not accessible:
             break
 
-        # 5. Aggiorna il conteggio totale e la griglia.
-        total_removed_rolls += len(removable_this_round)
-        for r, c in removable_this_round:
-            grid[r][c] = '.'  # "Rimuove" il rotolo.
+        # Rimuovi i rotoli accessibili
+        for row, col in accessible:
+            grid[row][col] = '.'
 
-    # 7. Stampa il risultato finale.
-    print(f"Il numero totale di rotoli di carta rimovibili è: {total_removed_rolls}")
+        total_removed += len(accessible)
 
+    return total_removed
 
 def part_1(data:list[list[str]]) -> None:
-    solve(data)
+    # Parte 1
+    accessible = find_accessible_rolls(data)
+    print(f"Parte 1: {len(accessible)}")
 
 def part_2(data:list[list[str]]) -> None:
-    solve_part_two(data)
+    total = remove_accessible_rolls(data)
+    print(f"Parte 2: {total}")
 
 if __name__ == "__main__":
     data_input = utils.read_input(4, map_fn, False)

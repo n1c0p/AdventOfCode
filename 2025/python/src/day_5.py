@@ -43,16 +43,30 @@ def count_fresh_ids(ranges, ids):
 
     return count
 
+
+def count_total_fresh_ids(ranges):
+    """
+    Conta il numero totale di ID freschi nei range uniti.
+    """
+    merged = merge_ranges(ranges)
+    total = 0
+
+    for start, end in merged:
+        total += end - start + 1  # +1 perché i range sono inclusivi
+
+    return total
+
 def part_1(ingredient_ids:list[tuple[int,int]], fresh_ingredient:list[int]) -> None:
     # Parte 1
     result = count_fresh_ids(ingredient_ids, fresh_ingredient)
     print(f"Numero di ID freschi: {result}")
 
 
-def part_2(ingredient_ids:list[tuple[int, int]], fresh_ingredient:list[int]) -> None:
-    pass
+def part_2(ingredient_ids:list[tuple[int, int]]) -> None:
+    result = count_total_fresh_ids(ingredient_ids)
+    print(f"Numero di ID freschi: {result}")
 
 if __name__ == "__main__":
     list_ingredient_ids, list_fresh_ingredient = utils.read_multisection_input(5, [map_ingredient_ids, map_fresh_ingredient], False)
     part_1(list_ingredient_ids, list_fresh_ingredient)
-    #part_2(list_ingredient_ids, list_fresh_ingredient)
+    part_2(list_ingredient_ids)

@@ -53,9 +53,9 @@ def read_multisection_input[T](
 
     try:
         if example:
-            filename = f"day_{day}_example.txt"
+            filename = f"{day}/day_{day}_example.txt"
         else:
-            filename = f"day_{day}.txt"
+            filename = f"{day}/day_{day}.txt"
         with open(os.path.join("..", "inputs", filename)) as input_file:
             sections = input_file.read().split("\n\n")
             return [

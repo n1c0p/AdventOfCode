@@ -29,7 +29,8 @@ def read_input[T](
             filename = f"{day}/day_{day}_example.txt"
         else:
             filename = f"{day}/day_{day}.txt"
-        with open(os.path.join("..", "inputs", filename)) as input_file:
+
+        with open(os.path.join("../../", "inputs", filename)) as input_file:
             return [map_fn(line.strip()) for line in input_file]
     except FileNotFoundError as e:
         print(e)
@@ -56,7 +57,7 @@ def read_multisection_input[T](
             filename = f"{day}/day_{day}_example.txt"
         else:
             filename = f"{day}/day_{day}.txt"
-        with open(os.path.join("..", "inputs", filename)) as input_file:
+        with open(os.path.join("../../", "inputs", filename)) as input_file:
             sections = input_file.read().split("\n\n")
             return [
                 transformer(section)

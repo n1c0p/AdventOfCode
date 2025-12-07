@@ -10,20 +10,6 @@ Coordinate = namedtuple("Coordinate", ["x", "y"])
 def read_input[T](
     day: int, map_fn: Callable[[str], T] = str, example: bool = False
 ) -> List[T]:
-    """
-    Read puzzle input for file `../inputs/{day}/day_{day}.txt'
-    and apply map_fn function to each line.
-
-    If `example` is set to True, read file `../inputs/{day}/day_{day}_example.txt`
-    instead
-
-    :param day Which day's puzzle input to read
-    :param map_fn Cast each line into new type
-    :param example Read example input?
-
-    :returns Day's input processed into the desired format
-    """
-
     try:
         if example:
             filename = f"{day}/day_{day}_example.txt"
@@ -31,7 +17,24 @@ def read_input[T](
             filename = f"{day}/day_{day}.txt"
 
         with open(os.path.join("../../", "inputs", filename)) as input_file:
+            # da capire meglio lo strip
             return [map_fn(line.strip()) for line in input_file]
+            #return input_file.readlines()
+    except FileNotFoundError as e:
+        print(e)
+        sys.exit(1)
+
+def read_input_str[T](
+    day: int, map_fn: Callable[[str], T] = str, example: bool = False
+) -> List[T]:
+    try:
+        if example:
+            filename = f"{day}/day_{day}_example.txt"
+        else:
+            filename = f"{day}/day_{day}.txt"
+
+        with open(os.path.join("../../", "inputs", filename)) as input_file:
+            return input_file.readlines()
     except FileNotFoundError as e:
         print(e)
         sys.exit(1)

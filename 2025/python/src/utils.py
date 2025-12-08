@@ -19,7 +19,6 @@ def read_input[T](
         with open(os.path.join("../../", "inputs", filename)) as input_file:
             # da capire meglio lo strip
             return [map_fn(line.strip()) for line in input_file]
-            #return input_file.readlines()
     except FileNotFoundError as e:
         print(e)
         sys.exit(1)

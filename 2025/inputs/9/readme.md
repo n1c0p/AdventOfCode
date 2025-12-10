@@ -1,5 +1,3 @@
-# Analisi dello script `day_9.py`
-
 Lo script risolve un problema che coinvolge coordinate 2D e calcolo di aree di rettangoli.
 
 ## Funzioni di utilità

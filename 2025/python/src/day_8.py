@@ -243,7 +243,7 @@ class PlayGround:
 
 class Solution:
     def __init__(self):
-        self.lines = utils.read_input(8, self.map_fn_str, True)
+        self.lines = utils.read_input(8, self.map_fn_str, False)
 
     def first_task(self, connections=10) -> int:
         playground = PlayGround(self.lines)

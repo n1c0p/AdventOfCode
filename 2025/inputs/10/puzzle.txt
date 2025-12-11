@@ -46,8 +46,6 @@ Analyze each machine's indicator light diagram and button wiring schematics. Wha
 
 Your puzzle answer was 401.
 
-The first half of this puzzle is complete! It provides one gold star: *
-
 --- Part Two ---
 All of the machines are starting to come online! Now, it's time to worry about the joltage requirements.
 
@@ -77,3 +75,7 @@ Configuring the third machine's counters requires a minimum of 11 button presses
 So, the fewest button presses required to correctly configure the joltage level counters on all of the machines is 10 + 12 + 11 = 33.
 
 Analyze each machine's joltage requirements and button wiring schematics. What is the fewest button presses required to correctly configure the joltage level counters on all of the machines?
+
+Your puzzle answer was 15017.
+
+Both parts of this puzzle are complete! They provide two gold stars: **

@@ -35,7 +35,7 @@ def part_2(machines: list[tuple[str, str, str]]) -> None:
 
 
 if __name__ == "__main__":
-    data = utils.read_input(11, map_fn, False)
+    data = utils.read_input(11, map_fn, True)
     part_1(data)
     # Esegue la parte 2: approccio con programmazione lineare intera
     #part_2(data)

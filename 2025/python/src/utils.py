@@ -38,6 +38,22 @@ def read_input_str[T](
         print(e)
         sys.exit(1)
 
+def read_input_entire_str(
+    day: int, example: bool = False
+) -> str:
+    try:
+        if example:
+            filename = f"{day}/day_{day}_example.txt"
+        else:
+            filename = f"{day}/day_{day}.txt"
+
+        with open(os.path.join("../../", "inputs", filename)) as input_file:
+            return input_file.read()
+    except FileNotFoundError as e:
+        print(e)
+        sys.exit(1)
+
+
 
 def read_multisection_input[T](
     day: int, map_fns: List[Callable[[str], T]] = None, example: bool = False
@@ -68,7 +84,6 @@ def read_multisection_input[T](
     except FileNotFoundError as e:
         print(e)
         sys.exit(1)
-
 
 def create_grid(
     inputs: List[List[str]],

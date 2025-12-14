@@ -1,5 +1,3 @@
-from typing import Any
-
 import utils  # Modulo personalizzato per leggere gli input
 from collections import deque
 

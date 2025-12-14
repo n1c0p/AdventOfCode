@@ -1,3 +1,5 @@
+from typing import Any
+
 import utils  # Modulo personalizzato per leggere gli input
 from collections import deque
 
@@ -18,8 +20,7 @@ def create_graph(list_of_devices: list[tuple[str, set[str]]]) -> dict[str, set[s
 
 
 # DFS (Depth-First Search) per tracciare tutti i percorsi possibili.
-def dfs(circuit, start, end, cache) -> int:
-    # Controlla se il risultato è già in cache per evitare ricalcoli
+def dfs(circuit: dict[str, set[str]], start:str, end:str, cache:dict) -> int:    # Controlla se il risultato è già in cache per evitare ricalcoli
     if (start, end) in cache:
         return cache[(start, end)]
 
